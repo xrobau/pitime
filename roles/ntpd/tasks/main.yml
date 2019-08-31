@@ -1,0 +1,8 @@
+---
+- name: Install packages
+  package:
+    name: [ ntpsec ]
+    state: present
+
+- name: Make sure log dir exists
+  file: path=/var/log/ntpsec/ state=directory

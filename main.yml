@@ -1,0 +1,10 @@
+---
+- hosts: all
+  gather_facts: yes
+  strategy: free
+  roles:
+    - check-buster
+    - bootconfig
+    - gpsd
+    - ntpd
+

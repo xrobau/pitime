@@ -1,0 +1,14 @@
+---
+- name: Install GPSd packages and screen/minicom for testing
+  package:
+    name: [ gpsd, gpsd-clients, pps-tools, screen, minicom ]
+    state: present
+
+- name: Configure gpsd
+  copy: src=config dest=/etc/default/gpsd
+
+- name: Add our udev rules
+  copy: src=pps.config dest=/etc/udev/rules.d/01-ppsd.rules
+
+- name: Enable gpsd to start on boot
+  service: name=gpsd state=started enabled=yes

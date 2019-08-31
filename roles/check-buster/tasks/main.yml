@@ -1,0 +1,5 @@
+---
+- name: Fail if we're not on buster
+  fail:
+  when: ansible_distribution_release != "buster"
+

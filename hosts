@@ -1,0 +1,2 @@
+[timeservers]
+127.0.0.1 hostname=ntp3 gpiopin=18

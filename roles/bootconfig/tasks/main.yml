@@ -1,0 +1,42 @@
+---
+# enable_uart=1
+
+- name: Overclock SD Card
+  lineinfile:
+    path: /boot/config.txt
+    line: dtparam=sd_overclock=100
+
+- name: Disable bluetooth
+  lineinfile:
+    path: /boot/config.txt
+    line: dtoverlay=pi3-disable-bt
+
+- name: Configure our pps GPIO pin
+  lineinfile:
+    path: /boot/config.txt
+    line: dtoverlay=pps-gpio,gpiopin={{ gpiopin }}
+
+- name: Remove serial console
+  lineinfile:
+    path: /boot/cmdline.txt
+    regexp: '^(.+)console=serial.,\d+ (.+)$'
+    line: '\1\2'
+    backrefs: yes
+
+- name: Do we have nohz?
+  command: 'grep nohz=off /boot/cmdline.txt'
+  register: nohz
+  ignore_errors: yes
+  changed_when: false
+
+- name: Add nohz if needed
+  lineinfile:
+    path: /boot/cmdline.txt
+    regexp: '^(.+)$'
+    line: '\1 nohz=off'
+    backrefs: yes
+  when: nohz.stdout == ""
+
+- name: Disable hciuart
+  service: name=hciuart state=stopped enabled=no
+

@@ -1,0 +1,9 @@
+# This file was created by the Ansible gpsd role
+# See https://github.com/xrobau/pitime
+
+START_DAEMON="true"
+USBAUTO="true"
+DEVICES="/dev/gps0 /dev/pps0"
+GPSD_OPTIONS="-n"
+
+
